@@ -9,7 +9,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/dferreira/.oh-my-zsh"
+export ZSH="{{ .chezmoi.homeDir }}/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -84,10 +84,14 @@ plugins=(
     bgnotify
     command-not-found
     cp
+    {{- if eq .poetry "true"}}
     gcloud
+    {{- end}}
     dotenv
     timer
+    {{- if eq .poetry "true"}}
     poetry
+    {{- end}}
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -119,7 +123,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # pyenv
-export PATH="/home/dferreira/.pyenv/bin:$PATH"
+export PATH="{{ .chezmoi.homeDir }}/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
@@ -145,14 +149,14 @@ zle -N down-line-or-local-history
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/dferreira/.miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('{{ .chezmoi.homeDir }}/.miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/dferreira/.miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/dferreira/.miniconda3/etc/profile.d/conda.sh"
+    if [ -f "{{ .chezmoi.homeDir }}/.miniconda3/etc/profile.d/conda.sh" ]; then
+        . "{{ .chezmoi.homeDir }}/.miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/dferreira/.miniconda3/bin:$PATH"
+        export PATH="{{ .chezmoi.homeDir }}/.miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -176,14 +180,18 @@ bindkey '^R' znt-history-widget
 setopt AUTO_PUSHD HIST_IGNORE_DUPS PUSHD_IGNORE_DUPS
 zstyle ':completion::complete:n-kill::bits' matcher 'r:|=** l:|=*'
 ### END ###
+{{- if eq .nodenv "true"}}
 
 # nodenv
 export PATH="$HOME/.nodenv/bin:$PATH"
 eval "$(nodenv init -)"
+{{- end}}
+{{- if eq .rbenv "true"}}
 
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+{{- end}}
 
 # colorls
 source $(dirname $(gem which colorls))/tab_complete.sh
@@ -192,15 +200,20 @@ alias ls='colorls'
 
 # fuck
 eval $(thefuck --alias)
+{{- if eq .bentoml "true"}}
 
 # bentoml home
-BENTOML_HOME=/home/dferreira/volatile/bentoml
+BENTOML_HOME={{ .chezmoi.homeDir }}/volatile/bentoml
+{{- end}}
 
 alias tailf="tail -f"
+{{- if eq .poetry "true"}}
 
 # poetry
 export PATH="$HOME/.poetry/bin:$PATH"
-alias az-vm="/home/dferreira/.cache/pypoetry/virtualenvs/azure-ml-vm-o6ar4vop-py3.7/bin/az-vm"
+alias az-vm="{{ .chezmoi.homeDir }}/.cache/pypoetry/virtualenvs/azure-ml-vm-o6ar4vop-py3.7/bin/az-vm"
+{{- end}}
+{{- if eq .golang "true"}}
 
 # go
 export GOENV_ROOT="$HOME/.goenv"
@@ -208,4 +221,5 @@ export PATH="$GOENV_ROOT/bin:$PATH"
 eval "$(goenv init -)"
 export PATH="$GOROOT/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin"
+{{- end}}
 
