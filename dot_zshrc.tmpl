@@ -84,12 +84,12 @@ plugins=(
     bgnotify
     command-not-found
     cp
-    {{- if eq .poetry "true"}}
+    {{- if .gcloud }}
     gcloud
     {{- end}}
     dotenv
     timer
-    {{- if eq .poetry "true"}}
+    {{- if .poetry }}
     poetry
     {{- end}}
 )
@@ -180,13 +180,13 @@ bindkey '^R' znt-history-widget
 setopt AUTO_PUSHD HIST_IGNORE_DUPS PUSHD_IGNORE_DUPS
 zstyle ':completion::complete:n-kill::bits' matcher 'r:|=** l:|=*'
 ### END ###
-{{- if eq .nodenv "true"}}
+{{- if .nodenv }}
 
 # nodenv
 export PATH="$HOME/.nodenv/bin:$PATH"
 eval "$(nodenv init -)"
 {{- end}}
-{{- if eq .rbenv "true"}}
+{{- if .rbenv }}
 
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -200,20 +200,20 @@ alias ls='colorls'
 
 # fuck
 eval $(thefuck --alias)
-{{- if eq .bentoml "true"}}
+{{- if .bentoml }}
 
 # bentoml home
 BENTOML_HOME={{ .chezmoi.homeDir }}/volatile/bentoml
 {{- end}}
 
 alias tailf="tail -f"
-{{- if eq .poetry "true"}}
+{{- if .poetry }}
 
 # poetry
 export PATH="$HOME/.poetry/bin:$PATH"
 alias az-vm="{{ .chezmoi.homeDir }}/.cache/pypoetry/virtualenvs/azure-ml-vm-o6ar4vop-py3.7/bin/az-vm"
 {{- end}}
-{{- if eq .golang "true"}}
+{{- if .golang }}
 
 # go
 export GOENV_ROOT="$HOME/.goenv"
