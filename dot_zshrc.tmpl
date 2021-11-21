@@ -79,7 +79,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 bgnotify_threshold=1800
 plugins=(
     git 
+    {{- if .conda }}
     conda-zsh-completion
+    {{- end}}
     zsh-syntax-highlighting
     bgnotify
     command-not-found
@@ -121,11 +123,13 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+{{ - if .pyenv }}
 
 # pyenv
 export PATH="{{ .chezmoi.homeDir }}/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+{{ - end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -146,6 +150,7 @@ down-line-or-local-history() {
     zle set-local-history 0
 }
 zle -N down-line-or-local-history
+{{- if .conda }}
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -164,10 +169,13 @@ unset __conda_setup
 
 # conda autocomplete
 autoload -U compinit && compinit
+{{- end}}
+{{- if .azure}}
 
 # azure autocomplete
 source /etc/bash_completion.d/azure-cli
 export FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT='true'
+{{- end}}
 
 ### ZNT's installer added snippet ###
 fpath=( "$fpath[@]" "$HOME/.config/znt/zsh-navigation-tools" )
@@ -191,12 +199,12 @@ eval "$(nodenv init -)"
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-{{- end}}
 
 # colorls
 source $(dirname $(gem which colorls))/tab_complete.sh
 alias l='colorls -lA --sd'
 alias ls='colorls'
+{{- end}}
 
 # fuck
 eval $(thefuck --alias)

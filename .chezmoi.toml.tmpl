@@ -1,16 +1,22 @@
 {{- $email := promptString "email" "daniel.ferreira.1@gmail.com" -}}
+{{- $pyenv := promptBool "using pyenv?" false -}}
+{{- $conda := promptBool "using conda?" false -}}
 {{- $poetry := promptBool "using poetry?" false -}}
 {{- $golang := promptBool "using golang?" false -}}
 {{- $nodenv := promptBool "using nodenv?" false -}}
 {{- $rbenv := promptBool "using rbenv?" false -}}
 {{- $bentoml := promptBool "using bentoml?" false -}}
 {{- $gcloud := promptBool "using gcloud?" false -}}
+{{- $azure := promptBool "using azure?" false -}}
 [data]
     email = {{ $email | quote }}
+    pyenv = {{ $pyenv }}
+    conda = {{ $pyenv }}
     poetry = {{ $poetry }}
     golang = {{ $golang }}
     nodenv = {{ $nodenv }}
     rbenv = {{ $rbenv }}
     bentoml = {{ $bentoml }}
     gcloud = {{ $gcloud }}
+    azure = {{ $azure }}
 
