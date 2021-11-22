@@ -1,0 +1,21 @@
+Host hetzner
+    Hostname media.dcferreira.com
+    IdentityFile {{ .chezmoi.homeDir }}/.ssh/hetzner
+    ForwardAgent yes
+    User daniel
+    Port 10001
+{{- if .work_cyan }}
+
+Host cyan_mkofast
+    Hostname 10.147.0.9
+    IdentityFile ~/.ssh/cyan_ipa
+Host rd-jumphost
+    HostName 10.147.0.22
+    IdentityFile ~/.ssh/cyan_ipa
+Host deepmind
+    HostName 10.15.0.15
+    IdentityFile ~/.ssh/cyan_ipa
+    Port 22
+    ProxyCommand ssh -q -W %h:%p rd-jumphost
+{{- end}}
+
