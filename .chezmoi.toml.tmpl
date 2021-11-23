@@ -3,6 +3,7 @@
 {{- $conda := promptBool "using conda?" false -}}
 {{- $poetry := promptBool "using poetry?" false -}}
 {{- $golang := promptBool "using golang?" false -}}
+{{- $rust := promptBool "using rust?" false -}}
 {{- $nodenv := promptBool "using nodenv?" false -}}
 {{- $rbenv := promptBool "using rbenv?" false -}}
 {{- $bentoml := promptBool "using bentoml?" false -}}
@@ -15,6 +16,7 @@
     conda = {{ $conda }}
     poetry = {{ $poetry }}
     golang = {{ $golang }}
+    rust = {{ $rust }}
     nodenv = {{ $nodenv }}
     rbenv = {{ $rbenv }}
     bentoml = {{ $bentoml }}
