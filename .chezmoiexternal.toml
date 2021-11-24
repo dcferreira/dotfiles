@@ -22,3 +22,11 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+{{- if .conda }}
+[".oh-my-zsh/custom/plugins/conda-zsh-completion"]
+    type = "archive"
+    url = "https://github.com/esc/conda-zsh-completion/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+{{- end}}
