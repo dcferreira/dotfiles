@@ -3,4 +3,4 @@
 .oh-my-zsh/custom/plugins/**
 .vim_runtime/**/docs/tags*
 .vim_runtime/**/doc/tags*
-.vim_runtime/temp_dirs
+.vim_runtime/temp_dirs/**
