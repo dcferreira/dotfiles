@@ -1,0 +1,29 @@
+#!/bin/sh
+sudo apt update
+sudo apt install -y git zsh vim python3-dev python3-pip python3-setuptools curl wget thefuck
+
+{{- if .pyenv }}
+
+if [ ! -d "$HOME/.pyenv" ]
+then
+    echo "INSTALLING PYENV"
+    sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+        libsqlite3-dev llvm libncursesw5-dev xz-utils tk-dev libxml2-dev \
+        libxmlsec1-dev libffi-dev liblzma-dev 
+    curl https://pyenv.run | bash
+fi
+{{- end }}
+
+{{- if .rust }}
+
+if ! [ -x "$(command -v cargo)" ]
+then
+    echo "INSTALLING RUST"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
+{{- end }}
+
+if [ $(which zsh) != $SHELL ]
+then
+    chsh -s $(which zsh)
+fi
