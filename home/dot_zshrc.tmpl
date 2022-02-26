@@ -98,6 +98,9 @@ plugins=(
     {{- end}}
 )
 
+# silence output from ssh-agent init
+zstyle :omz:plugins:ssh-agent quiet yes
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
