@@ -1,6 +1,13 @@
 #!/bin/bash
 sudo apt update
-sudo apt install -y git zsh vim python3-dev python3-pip python3-setuptools curl wget thefuck tmux bat
+sudo apt install -y git zsh vim python3-dev python3-pip python3-setuptools curl wget thefuck tmux
+
+# install bat
+TEMP_DEB="$(mktemp)"
+wget -O "$TEMP_DEB" 'https://github.com/sharkdp/bat/releases/download/v0.20.0/bat_0.20.0_amd64.deb'
+sudo dpkg -i "$TEMP_DEB"
+rm -f "$TEMP_DEB"
+
 
 {{- if .pyenv }}
 
