@@ -208,12 +208,6 @@ BENTOML_HOME={{ .chezmoi.homeDir }}/volatile/bentoml
 {{- end}}
 
 alias tailf="tail -f"
-{{- if .poetry }}
-
-# poetry
-export PATH="$HOME/.poetry/bin:$PATH"
-alias az-vm="{{ .chezmoi.homeDir }}/.cache/pypoetry/virtualenvs/azure-ml-vm-o6ar4vop-py3.7/bin/az-vm"
-{{- end}}
 {{- if .golang }}
 
 # go
