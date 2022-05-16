@@ -37,7 +37,6 @@
     vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline                 # \n
-    time
     prompt_char             # prompt symbol
   )
 
@@ -107,6 +106,8 @@
     # battery               # internal battery
     # wifi                  # wifi speed
     # example               # example user-defined segment (see prompt_example function below)
+    command_execution_time
+    time
   )
 
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
@@ -1497,7 +1498,7 @@
   # Custom icon.
   # typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # Custom prefix.
-  typeset -g POWERLEVEL9K_TIME_PREFIX='%244Fat '
+  typeset -g POWERLEVEL9K_TIME_PREFIX='%244F'
 
   # Example of a user-defined prompt segment. Function prompt_example will be called on every
   # prompt if `example` prompt segment is added to POWERLEVEL9K_LEFT_PROMPT_ELEMENTS or
@@ -1538,7 +1539,7 @@
   #   - always:   Trim down prompt when accepting a command line.
   #   - same-dir: Trim down prompt when accepting a command line unless this is the first command
   #               typed after changing current working directory.
-  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=always
+  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
 
   # Instant prompt mode.
   #
@@ -1570,5 +1571,17 @@ typeset -g POWERLEVEL9K_CONFIG_FILE=${${(%):-%x}:a}
 'builtin' 'unset' 'p10k_config_opts'
 
 # add timestamps to old prompts https://github.com/romkatv/powerlevel10k/issues/316
-function p10k-on-pre-prompt() { p10k display '1'=show '2/left/time'=hide }
-function p10k-on-post-prompt() { p10k display '1'=hide '2/left/time'=show }
+function p10k-on-pre-prompt() {
+  # Show empty line if it's the first prompt in the TTY.
+  [[ $P9K_TTY == old ]] && p10k display 'empty_line'=show
+  # Show the first prompt line.
+  p10k display '1'=show '2/right/(command_execution_time|time)'=hide
+  # @romkatv recommends a variation of the following:
+  # p10k display '1'=show '2/right'=hide
+}
+
+function p10k-on-post-prompt() {
+  # Hide the empty line and the first prompt line.
+  p10k display 'empty_line|1'=hide '2/right/(command_execution_time|time)'=show
+}  
+
