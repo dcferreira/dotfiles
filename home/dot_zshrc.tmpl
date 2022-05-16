@@ -80,7 +80,6 @@ bgnotify_threshold=1800
 plugins=(
     ssh-agent
     git 
-    zsh-navigation-tools
     {{- if .conda }}
     conda-zsh-completion
     {{- end}}
@@ -221,3 +220,6 @@ export PATH="$PATH:$GOPATH/bin"
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 {{- end}}
+
+# mcfly
+eval "$(mcfly init zsh)"

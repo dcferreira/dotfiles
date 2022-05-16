@@ -11,6 +11,12 @@ then
     rm -f "$TEMP_DEB"
 fi
 
+# install mcfly
+if ! [ -x "$(command -v mcfly)" ]
+then
+    curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly --to $HOME/.local/bin
+fi
+
 
 {{- if .pyenv }}
 
