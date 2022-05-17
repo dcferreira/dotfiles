@@ -101,9 +101,11 @@ plugins=(
 zstyle :omz:plugins:ssh-agent quiet yes
 
 # tmux plugin confs
-ZSH_TMUX_AUTOSTART=true
-ZSH_TMUX_DEFAULT_SESSION_NAME=main
-
+# ignore these settings when launching from PyCharm
+if [ ${PYCHARM_HOSTED:-0} -eq 1 ]; then
+    ZSH_TMUX_AUTOSTART=true
+    ZSH_TMUX_DEFAULT_SESSION_NAME=main
+fi
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
