@@ -22,6 +22,12 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+[".vim_runtime/my_plugins/toml"]
+    type = "archive"
+    url = "https://github.com/cespare/vim-toml/archive/refs/heads/main.zip"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
 {{- if .conda }}
 [".oh-my-zsh/custom/plugins/conda-zsh-completion"]
     type = "archive"
