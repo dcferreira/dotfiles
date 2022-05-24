@@ -9,7 +9,6 @@
 {{- $bentoml := promptBool "using bentoml?" false -}}
 {{- $gcloud := promptBool "using gcloud?" false -}}
 {{- $azure := promptBool "using azure?" false -}}
-{{- $work_cyan := promptBool "is this a cyan machine?" false -}}
 [data]
     email = {{ $email | quote }}
     pyenv = {{ $pyenv }}
@@ -22,5 +21,4 @@
     bentoml = {{ $bentoml }}
     gcloud = {{ $gcloud }}
     azure = {{ $azure }}
-    work_cyan = {{ $work_cyan }}
 
