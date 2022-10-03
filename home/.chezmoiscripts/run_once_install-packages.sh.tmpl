@@ -38,7 +38,6 @@ then
     curl -sSL https://install.python-poetry.org | python - --preview
 fi
 {{- end }}
-
 {{- if .rust }}
 
 if ! [ -x "$(command -v cargo)" ]
@@ -47,6 +46,27 @@ then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 {{- end }}
+{{- if .nodenv }}
+
+if ! [ -x "$(command -v nodenv)" ]
+then
+    curl -fsSL https://raw.githubusercontent.com/nodenv/nodenv-installer/master/bin/nodenv-installer | bash
+fi
+{{- end }}
+{{- if .rbenv }}
+
+if ! [ -x "$(command -v rbenv)" ]
+then
+    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+fi
+{{- end}}
+{{- if .golang }}
+
+if ! [ -x "$(command -v goenv)" ]
+then
+    git clone https://github.com/syndbg/goenv.git ~/.goenv
+fi
+{{- end}}
 
 if [ $(which zsh) != $SHELL ]
 then
