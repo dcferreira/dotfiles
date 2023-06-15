@@ -1,5 +1,9 @@
 #!/bin/bash
-if [ -x "$(command -v apt)" ]
+if [ -x "$(command -v brew)" ]
+then
+    brew update
+    brew install git thefuck tmux 
+elif [ -x "$(command -v apt)" ]
 then
     sudo apt update
     sudo apt install -y git zsh vim python3-dev python3-pip python3-setuptools curl wget thefuck tmux xsel ruby-dev
@@ -12,7 +16,10 @@ gem install --user-install -n $HOME/.local/bin colorls
 # install bat
 if ! [ -x "$(command -v bat)" ]
 then
-    if [ -x "$(command -v apt)" ]
+    if [ -x "$(command -v brew)" ]
+    then
+        brew install bat
+    elif [ -x "$(command -v apt)" ]
     then
         TEMP_DEB="$(mktemp)"
         wget -O "$TEMP_DEB" 'https://github.com/sharkdp/bat/releases/download/v0.21.0/bat-musl_0.21.0_amd64.deb'
@@ -24,28 +31,27 @@ then
     fi
 fi
 
-# install mcfly
-if ! [ -x "$(command -v mcfly)" ]
-then
-    curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly --to $HOME/.local/bin
-fi
-
 
 {{- if .pyenv }}
 
 if [ ! -d "$HOME/.pyenv" ]
 then
     echo "INSTALLING PYENV"
-    if [ -x "$(command -v apt)" ]
+    if [ -x "$(command -v brew)" ]
     then
-        sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
-            libsqlite3-dev llvm libncursesw5-dev xz-utils tk-dev libxml2-dev \
-            libxmlsec1-dev libffi-dev liblzma-dev 
-    elif [ -x "$(command -v yay)" ]
+        brew install pyenv
+    else
+        if [ -x "$(command -v apt)" ]
     then
-        yay --needed -S base-devel openssl zlib xz tk
+            sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+                libsqlite3-dev llvm libncursesw5-dev xz-utils tk-dev libxml2-dev \
+                libxmlsec1-dev libffi-dev liblzma-dev 
+        elif [ -x "$(command -v yay)" ]
+        then
+            yay --needed -S base-devel openssl zlib xz tk
+        fi
+        curl https://pyenv.run | bash
     fi
-    curl https://pyenv.run | bash
 fi
 {{- end }}
 {{- if .poetry }}
@@ -53,7 +59,7 @@ fi
 if ! [ -x "$(command -v poetry)" ]
 then
     echo "INSTALLING POETRY"
-    curl -sSL https://install.python-poetry.org | python - --preview
+    curl -sSL https://install.python-poetry.org | python -
 fi
 {{- end }}
 {{- if .rust }}
@@ -93,3 +99,4 @@ if [ $(which zsh) != $SHELL ]
 then
     chsh -s $(which zsh)
 fi
+
