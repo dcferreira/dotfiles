@@ -229,3 +229,7 @@ export PATH="$PATH:$GOPATH/bin"
 export PATH="$HOME/.cargo/bin:$PATH"
 {{- end}}
 
+# FZF settings
+export FZF_PREVIEW_ADVANCED=true
+export LESSOPEN='| lessfilter-fzf %s'
+
